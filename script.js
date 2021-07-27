@@ -5,13 +5,37 @@ let seatTotal = rows * 2 * columns;
 let info = document.getElementById("selection");
 const fuselage = document.getElementById("fuselage");
 
-// const seat_ = {
-//   column,
-//   row,
-//   reserved: false,
-//   selected: false,
-//   sold: false,
-// };
+class Seat {
+  constructor(l, rowNum) {
+    this._l = l;
+    this._rowNum = rowNum;
+    this._reserved = false;
+    this._price = 11.99;
+  }
+  get seatLetter() {
+    return this._l;
+  }
+  get seatRow() {
+    return this._rowNum;
+  }
+  get seatName() {
+    return this._rowNum + this._l;
+  }
+  get price() {
+    return this._price;
+  }
+  get isReserved() {
+    return this._reserved;
+  }
+  reserve() {
+    this._reserved = true;
+    return this._reserved;
+  }
+
+  set price(price) {
+    this._price = price;
+  }
+}
 
 function addSeat() {
   for (let r = 0; r < rows; r++) {
