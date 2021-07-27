@@ -7,13 +7,13 @@ h1 {
   padding: 20px;
 }
 .main-container {
-  display: flex;
-  align-items: center;
   margin-top: 15vh;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
 }
 .airplane-container {
-  width: 50%;
   height: 100%;
+  text-align: center;
 }
 /* .airplane {
   background: url("airplane.png");
@@ -27,11 +27,13 @@ h1 {
 .fuselage {
   margin: 0 auto;
   /* padding: 100px auto; */
-  width: fit-content;
+  max-width: fit-content;
   background-color: white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(auto, 40px);
+  justify-content: center;
+  justify-items: center;
   column-gap: 6px;
   row-gap: 5px;
 }
@@ -41,7 +43,8 @@ h1 {
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   margin: 1px;
-  padding: 20px;
+  padding: 10px;
+  width: 25px;
   color: whitesmoke;
 }
 
@@ -54,6 +57,8 @@ h1 {
 
 .seat:hover {
   cursor: pointer;
+  width: 28px;
+  box-shadow: 1px 2px 1px gray;
 }
 .reserved {
   background-color: #35ff00;
