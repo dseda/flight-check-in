@@ -44,12 +44,16 @@ h1 {
   margin: 1px;
   padding: 20px;
 }
+
+.seat:hover {
+  cursor: pointer;
+}
 .reserved {
   background-color: #35ff00;
 }
 
 .selected {
-  background-color: #ffff00;
+  box-shadow: 1px 3px 3px #848282;
 }
 .unavailable {
   background-color: rgb(89, 9, 9);

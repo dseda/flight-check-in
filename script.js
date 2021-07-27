@@ -3,7 +3,7 @@ let seatIds = ["A", "B", "C", "D", "E", "F"];
 let corridors = 1;
 let columns = 3;
 let seatTotal = rows * (corridors + 1) * columns;
-
+addSeat();
 function addSeat() {
   const fuselage = document.getElementById("fuselage");
   for (let s = 0; s < seatTotal; s++) {
@@ -13,7 +13,7 @@ function addSeat() {
   }
 }
 const seats = document.getElementsByClassName("seat");
-
+console.log(seats);
 for (let i = 0; i < seats.length; i++) {
   seats[i].addEventListener("mousedown", function () {
     seats[i].classList.add("selected");
@@ -37,4 +37,3 @@ for (let i = 0; i < seats.length; i++) {
 //   selected: false,
 //   sold: false,
 // };
-addSeat();
