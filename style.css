@@ -1,0 +1,56 @@
+body {
+  width: 100%;
+  text-align: center;
+  /* height: fit-content; */
+}
+h1 {
+  padding: 20px;
+}
+.main-container {
+  display: flex;
+  align-items: center;
+  margin-top: 15vh;
+}
+.airplane-container {
+  width: 60%;
+  height: 100%;
+}
+/* .airplane {
+  background: url("airplane.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  width: 120%;
+  min-width: 100%;
+  min-height: 100vh;
+  opacity: 1;
+} */
+.fuselage {
+  margin: 0 auto;
+  /* padding: 100px auto; */
+  width: fit-content;
+  background-color: white;
+  display: grid;
+  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-rows: repeat(auto, 40px);
+  column-gap: 6px;
+  row-gap: 5px;
+}
+
+.seat {
+  background-color: rgb(70, 70, 70);
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  z-index: 30;
+  margin: 1px;
+  padding: 20px;
+}
+.reserved {
+  background-color: #35ff00;
+}
+
+.selected {
+  background-color: #ffff00;
+}
+.unavailable {
+  background-color: rgb(89, 9, 9);
+}
