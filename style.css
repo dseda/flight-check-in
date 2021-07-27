@@ -12,7 +12,7 @@ h1 {
   margin-top: 15vh;
 }
 .airplane-container {
-  width: 60%;
+  width: 50%;
   height: 100%;
 }
 /* .airplane {
@@ -30,19 +30,26 @@ h1 {
   width: fit-content;
   background-color: white;
   display: grid;
-  grid-template-columns: auto auto auto auto auto auto;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
   grid-template-rows: repeat(auto, 40px);
   column-gap: 6px;
   row-gap: 5px;
 }
 
 .seat {
-  background-color: rgb(70, 70, 70);
+  background-color: rgb(93, 92, 92);
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  z-index: 30;
   margin: 1px;
   padding: 20px;
+  color: whitesmoke;
+}
+
+.corridor {
+  margin: 1px;
+  padding: 20px;
+  background-color: rgb(255, 255, 255);
+  color: rgb(93, 92, 92);
 }
 
 .seat:hover {
@@ -50,10 +57,11 @@ h1 {
 }
 .reserved {
   background-color: #35ff00;
+  color: rgb(93, 92, 92);
 }
 
 .selected {
-  box-shadow: 1px 3px 3px #848282;
+  box-shadow: 2px 3px 3px #848282;
 }
 .unavailable {
   background-color: rgb(89, 9, 9);
