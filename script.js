@@ -1,13 +1,17 @@
-let rows = 25;
+let rows = 26;
 let seatLetters = ["A", "B", "C", "D", "E", "F"];
 let columns = 3;
 let seatTotal = rows * 2 * columns;
-let info = document.getElementById("selection");
+const info = document.getElementById("selected-seat-info"); //Seat selection information
+const price = document.getElementById("price");
 const fuselage = document.getElementById("fuselage");
+const seatingList = []; // Seats in a seating map
+const reservedSeats = [];
+const reservedItem = document.getElementsByClassName("reserved");
 
 class Seat {
-  constructor(l, rowNum) {
-    this._l = l;
+  constructor(letter, rowNum) {
+    this._letter = letter;
     this._rowNum = rowNum;
     this._reserved = false;
     this._price = 11.99;
@@ -19,7 +23,7 @@ class Seat {
     return this._rowNum;
   }
   get seatName() {
-    return this._rowNum + this._l;
+    return this._rowNum + this._letter;
   }
   get price() {
     return this._price;
@@ -31,45 +35,77 @@ class Seat {
     this._reserved = true;
     return this._reserved;
   }
-
+  unreserve() {
+    this._reserved = false;
+    return this._reserved;
+  }
   set price(price) {
     this._price = price;
   }
 }
+// Creates seat map and initialises seat objects
 
-function addSeat() {
+function createSeat() {
+  info.innerHTML = "";
   for (let r = 0; r < rows; r++) {
-    let corridor = document.createElement("div");
-    corridor.classList.add("corridor");
-    corridor.innerHTML = r + 1;
+    let aisle = document.createElement("div");
+    aisle.classList.add("aisle");
+    aisle.innerHTML = r + 1; //Shows isle numbers
     for (let i = 0; i < seatLetters.length; i++) {
-      let seat = document.createElement("div");
-      seat.classList.add("seat");
-      seat.innerHTML = seatLetters[i];
+      const seat = new Seat(seatLetters[i], r + 1);
+      seatingList.push(seat);
+      let passengerSeat = document.createElement("div");
+      passengerSeat.innerHTML = seat.seatName;
+      passengerSeat.classList.add("seat");
       if (i === 3) {
-        fuselage.appendChild(corridor);
-        fuselage.appendChild(seat);
+        fuselage.appendChild(aisle);
+        fuselage.appendChild(passengerSeat);
       } else {
-        fuselage.appendChild(seat);
+        fuselage.appendChild(passengerSeat);
       }
     }
   }
 }
-addSeat();
+createSeat();
+
 const seats = document.getElementsByClassName("seat");
-for (let i = 0; i < seats.length; i++) {
-  seats[i].addEventListener("mousedown", function (e) {
-    e.target.classList.add("selected");
-  });
-}
+
+//Seat selection event
 for (let i = 0; i < seats.length; i++) {
   seats[i].addEventListener("mouseup", function (e) {
-    e.target.classList.add("reserved");
-    info.innerHTML = e.target.innerHTML;
+    if (
+      !e.target.classList.contains("reserved") &&
+      reservedSeats.length === 0
+    ) {
+      let selectedSeat = seatingList.find(
+        (s) => s.seatName === e.target.innerHTML
+      );
+      selectedSeat.reserve();
+      e.target.classList.add("reserved");
+      reservedSeats.push(selectedSeat);
+      info.innerHTML = e.target.innerHTML;
+      price.innerHTML = selectedSeat.price;
+      return reservedSeats;
+    } else if (e.target.classList.contains("reserved")) {
+      e.target.classList.remove("reserved");
+      info.innerHTML = "";
+      reservedSeats.pop();
+      price.innerHTML = 0;
+      return reservedSeats;
+    } else if (
+      !e.target.classList.contains("reserved") &&
+      reservedSeats.length !== 0
+    ) {
+      reservedItem[0].classList.remove("reserved");
+      reservedSeats[0].unreserve();
+      reservedSeats.pop();
+      selectedSeat = seatingList.find((s) => s.seatName === e.target.innerHTML);
+      selectedSeat.reserve();
+      e.target.classList.add("reserved");
+      reservedSeats.push(selectedSeat);
+      info.innerHTML = e.target.innerHTML;
+      price.innerHTML = selectedSeat.price;
+      return reservedSeats;
+    }
   });
 }
-// for (let i = 0; i < seats.length; i++) {
-//   seats[i].addEventListener("dblclick", function () {
-//     seats[i].classList.add("reserved");
-//   });
-// }
