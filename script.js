@@ -5,7 +5,7 @@ let seatTotal = rows * 2 * columns;
 const info = document.getElementById("selected-seat-info"); //Seat selection information
 const price = document.getElementById("price");
 const fuselage = document.getElementById("fuselage");
-const seatingList = []; // Seats in a seating map
+const seatingList = []; // Seats on a seating map
 const reservedSeats = [];
 const reservedItem = document.getElementsByClassName("reserved");
 
