@@ -12,10 +12,11 @@ const confirmBtn = document.getElementById("confirm");
 
 class Seat {
   constructor(letter, rowNum) {
+    this._type = "st";
+    this._price = 11.99;
     this._letter = letter;
     this._rowNum = rowNum;
     this._reserved = false;
-    this._price = 11.99;
     this._sold = false;
   }
   get seatLetter() {
@@ -50,6 +51,14 @@ class Seat {
   set price(price) {
     this._price = price;
   }
+  upgrade() {
+    this._type = "premium";
+    this._price = 18.99;
+  }
+  downgrade() {
+    this._type = "st";
+    this._price = 11.99;
+  }
 }
 // Creates seat map and initialises seat objects
 
@@ -58,13 +67,15 @@ function createSeat() {
   for (let r = 0; r < rows; r++) {
     let aisle = document.createElement("div");
     aisle.classList.add("aisle");
+    // console.log(r);
     for (let i = 0; i < seatLetters.length; i++) {
-      const seat = new Seat(seatLetters[i], r + 1);
+      const seat = new Seat(seatLetters[i], r + 1, "st");
       seatingList.push(seat);
       let passengerSeat = document.createElement("div");
       passengerSeat.innerHTML = seat.seatName;
       passengerSeat.classList.add("seat");
       if (r === 14 || r === 15) {
+        seat.upgrade();
         passengerSeat.classList.add("premium");
       }
       if (i === 3) {
