@@ -1,73 +1,99 @@
 body {
-  width: 100%;
-  text-align: center;
-  /* height: fit-content; */
-}
-h1 {
-  padding: 20px;
-}
-.main-container {
-  margin-top: 15vh;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-}
-.airplane-container {
-  height: 100%;
-  text-align: center;
-}
-/* .airplane {
-  background: url("airplane.png");
-  background-repeat: no-repeat;
-  background-position: center;
-  width: 120%;
-  min-width: 100%;
-  min-height: 100vh;
-  opacity: 1;
-} */
-.fuselage {
+  width: 95%;
   margin: 0 auto;
-  /* padding: 100px auto; */
-  max-width: fit-content;
+  text-align: center;
+  /* border: 2px solid plum; */
+}
+
+.main-container {
+  width: 90%;
+  margin: 0 auto;
+  display: flex;
+  flex-flow: column-reverse;
+  align-content: center;
+}
+
+.info {
+  margin: 30px auto;
+  padding: 20px auto;
+}
+.fuselage {
+  margin: 0 auto 30px;
+  width: 100%;
   background-color: white;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 0.4fr 1fr 1fr 1fr;
   grid-template-rows: repeat(auto, 40px);
   justify-content: center;
   justify-items: center;
-  column-gap: 6px;
-  row-gap: 5px;
+  column-gap: 2px;
+  row-gap: 9px;
+  border: 2px solid pink;
 }
 
 .seat {
-  background-color: rgb(93, 92, 92);
-  border-top-left-radius: 5px;
-  border-top-right-radius: 5px;
-  margin: 1px;
-  padding: 10px;
-  width: 25px;
+  background-color: rgb(42, 89, 183);
+  /* background-color: rgb(18, 72, 179); */
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  /* padding: 8px; */
+  width: 90%;
+  padding: 8px 0;
   color: whitesmoke;
 }
 
-.corridor {
-  margin: 1px;
-  padding: 20px;
-  background-color: rgb(255, 255, 255);
-  color: rgb(93, 92, 92);
+.premium {
+  margin-top: 30px;
+  border-top: 8px solid rgb(0, 200, 255);
+  margin-bottom: 4px;
 }
-
+.aisle,
+.aisle-premium {
+  min-width: 10px;
+  margin: 10px auto;
+}
 .seat:hover {
   cursor: pointer;
-  width: 28px;
   box-shadow: 1px 2px 1px gray;
 }
+
+.seat:active {
+  box-shadow: 2px 3px 3px #636262;
+}
+
 .reserved {
   background-color: #35ff00;
   color: rgb(93, 92, 92);
 }
 
-.selected {
-  box-shadow: 2px 3px 3px #848282;
+.sold {
+  background-color: rgb(93, 92, 92);
+  /* background-color: rgb(154, 42, 42); */
+  color: white;
+  /* font-size: larger; */
 }
-.unavailable {
-  background-color: rgb(89, 9, 9);
+
+button:active {
+  box-shadow: 3px 3px 3px #848282;
+}
+
+@media screen and (min-width: 650px) {
+  .main-container {
+    flex-flow: row;
+    flex-direction: row;
+    background-color: burlywood;
+    border: 5px solid coral;
+  }
+  .fuselage {
+    margin: 0 auto;
+    min-width: max-content;
+    column-gap: 9px;
+    row-gap: 6px;
+    flex-basis: content;
+  }
+
+  .seat {
+    width: 30px;
+    padding: 10px;
+  }
 }

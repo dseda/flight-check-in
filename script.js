@@ -8,6 +8,7 @@ const fuselage = document.getElementById("fuselage");
 const seatingList = []; // Seats on a seating map
 const reservedSeats = [];
 const reservedItem = document.getElementsByClassName("reserved");
+const confirmBtn = document.getElementById("confirm");
 
 class Seat {
   constructor(letter, rowNum) {
@@ -15,9 +16,10 @@ class Seat {
     this._rowNum = rowNum;
     this._reserved = false;
     this._price = 11.99;
+    this._sold = false;
   }
   get seatLetter() {
-    return this._l;
+    return this._letter;
   }
   get seatRow() {
     return this._rowNum;
@@ -39,6 +41,12 @@ class Seat {
     this._reserved = false;
     return this._reserved;
   }
+  sell() {
+    this._sold = true;
+  }
+  unsell() {
+    this._sold = false;
+  }
   set price(price) {
     this._price = price;
   }
@@ -50,13 +58,15 @@ function createSeat() {
   for (let r = 0; r < rows; r++) {
     let aisle = document.createElement("div");
     aisle.classList.add("aisle");
-    aisle.innerHTML = r + 1; //Shows isle numbers
     for (let i = 0; i < seatLetters.length; i++) {
       const seat = new Seat(seatLetters[i], r + 1);
       seatingList.push(seat);
       let passengerSeat = document.createElement("div");
       passengerSeat.innerHTML = seat.seatName;
       passengerSeat.classList.add("seat");
+      if (r === 14 || r === 15) {
+        passengerSeat.classList.add("premium");
+      }
       if (i === 3) {
         fuselage.appendChild(aisle);
         fuselage.appendChild(passengerSeat);
@@ -109,3 +119,10 @@ for (let i = 0; i < seats.length; i++) {
     }
   });
 }
+confirmBtn.addEventListener("click", function (e) {
+  let reserved = document.getElementsByClassName("reserved");
+  reserved[0].classList.add("sold");
+  reserved[0].innerHTML = "X";
+  reserved[0].classList.remove("reserved");
+  reservedSeats[0].sell();
+});
