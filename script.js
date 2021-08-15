@@ -9,7 +9,7 @@ const seatingList = []; // Seats on a seating map
 const reservedSeats = [];
 const reservedItem = document.getElementsByClassName("reserved");
 const confirmBtn = document.getElementById("confirm");
-
+const cancelBtn = document.getElementById("cancel");
 class Seat {
   constructor(letter, rowNum) {
     this._type = "st";
@@ -33,6 +33,9 @@ class Seat {
   }
   get isReserved() {
     return this._reserved;
+  }
+  get isSold() {
+    return this._sold;
   }
   reserve() {
     this._reserved = true;
@@ -69,7 +72,7 @@ function createSeat() {
     aisle.classList.add("aisle");
     // console.log(r);
     for (let i = 0; i < seatLetters.length; i++) {
-      const seat = new Seat(seatLetters[i], r + 1, "st");
+      const seat = new Seat(seatLetters[i], r + 1);
       seatingList.push(seat);
       let passengerSeat = document.createElement("div");
       passengerSeat.innerHTML = seat.seatName;
@@ -136,4 +139,20 @@ confirmBtn.addEventListener("click", function (e) {
   reserved[0].innerHTML = "X";
   reserved[0].classList.remove("reserved");
   reservedSeats[0].sell();
+});
+
+cancelBtn.addEventListener("click", function (e) {
+  let sold = document.getElementsByClassName("sold");
+  let reserved = document.getElementsByClassName("reserved");
+  if (reservedSeats[0].isSold) {
+    sold[0].innerHTML = reservedSeats[0].seatName;
+    sold[0].classList.remove("sold", "reserved");
+    reservedSeats[0].unreserve();
+    reservedSeats[0].unsell();
+    reservedSeats.pop();
+  } else {
+    reserved[0].classList.remove("reserved");
+    reservedSeats[0].unreserve();
+    reservedSeats.pop();
+  }
 });
