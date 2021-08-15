@@ -4,6 +4,27 @@ body {
   text-align: center;
   /* border: 2px solid plum; */
 }
+h1 {
+  padding-top: 40px;
+}
+
+.info {
+  margin: 10px auto 30px;
+  padding: 20px auto;
+}
+p {
+  font-size: larger;
+}
+span {
+  font-size: x-large;
+}
+#selected-seat-info {
+  display: block;
+  margin-top: 10px;
+}
+button {
+  padding: 5px;
+}
 
 .main-container {
   width: 90%;
@@ -13,22 +34,18 @@ body {
   align-content: center;
 }
 
-.info {
-  margin: 30px auto;
-  padding: 20px auto;
-}
 .fuselage {
   margin: 0 auto 30px;
   width: 100%;
   background-color: white;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 0.4fr 1fr 1fr 1fr;
-  grid-template-rows: repeat(auto, 40px);
+  grid-template-columns: repeat(3, 1fr) 0.4fr repeat(3, 1fr);
+  /* grid-template-rows: repeat(auto, 40px); */
   justify-content: center;
   justify-items: center;
   column-gap: 2px;
   row-gap: 9px;
-  border: 2px solid pink;
+  border: 1px solid lightgrey;
 }
 
 .seat {
@@ -41,7 +58,15 @@ body {
   padding: 8px 0;
   color: whitesmoke;
 }
+.seat:hover {
+  cursor: pointer;
+  box-shadow: 1px 2px 1px gray;
+}
 
+.seat:active,
+button:active {
+  box-shadow: 2px 3px 3px #636262;
+}
 .premium {
   margin-top: 30px;
   border-top: 8px solid rgb(0, 200, 255);
@@ -51,14 +76,6 @@ body {
 .aisle-premium {
   min-width: 10px;
   margin: 10px auto;
-}
-.seat:hover {
-  cursor: pointer;
-  box-shadow: 1px 2px 1px gray;
-}
-
-.seat:active {
-  box-shadow: 2px 3px 3px #636262;
 }
 
 .reserved {
@@ -74,25 +91,41 @@ body {
 button:active {
   box-shadow: 3px 3px 3px #848282;
 }
-
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 500px) and (max-width: 649px) {
   .main-container {
-    width
-    flex-direction: row;
-    background-color: burlywood;
-    border: 5px solid coral;
+    width: 90%;
   }
   .fuselage {
+    min-width: max-content;
+    max-width: 70%;
+  }
+}
+@media screen and (min-width: 650px) {
+  body {
+    font-size: medium;
+  }
+  .main-container {
+    margin-top: 60px;
+    width: 70%;
+    flex-direction: row;
+    /* background-color: burlywood; */
+    /* border: 5px solid coral; */
+  }
+  .fuselage {
+    grid-template-columns: repeat(3, 0.8fr) 0.2fr repeat(3, 0.8fr);
     margin: 0 auto;
     min-width: max-content;
-    max-width:
-    column-gap: 9px;
+    max-width: 40%;
+    column-gap: 6px;
     row-gap: 6px;
-    flex-basis: content;
   }
 
   .seat {
     width: 30px;
     padding: 10px;
+  }
+  button {
+    padding: 15px 10px;
+    margin: 5px;
   }
 }

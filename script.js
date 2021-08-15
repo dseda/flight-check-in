@@ -10,6 +10,7 @@ const reservedSeats = [];
 const reservedItem = document.getElementsByClassName("reserved");
 const confirmBtn = document.getElementById("confirm");
 const cancelBtn = document.getElementById("cancel");
+
 class Seat {
   constructor(letter, rowNum) {
     this._type = "st";
@@ -66,7 +67,7 @@ class Seat {
 // Creates seat map and initialises seat objects
 
 function createSeat() {
-  info.innerHTML = "";
+  info.innerHTML = "N/A";
   for (let r = 0; r < rows; r++) {
     let aisle = document.createElement("div");
     aisle.classList.add("aisle");
@@ -150,9 +151,13 @@ cancelBtn.addEventListener("click", function (e) {
     reservedSeats[0].unreserve();
     reservedSeats[0].unsell();
     reservedSeats.pop();
+    price.innerHTML = "0.00";
+    info.innerHTML = "N/A";
   } else {
     reserved[0].classList.remove("reserved");
     reservedSeats[0].unreserve();
     reservedSeats.pop();
+    price.innerHTML = "0.00";
+    info.innerHTML = "N/A";
   }
 });
