@@ -12,15 +12,14 @@
     <div class="main-container">
       <div id="fuselage" class="fuselage"></div>
       <!-- Seat Reservation Details  -->
-      <div class="info">
-        <p>Selected seat: <span id="selected-seat-info">N/A</span></p>
-        <p>
-          Total cost: 
-          <p><span id="currency">£</span><span id="price">0.00</span>
-            </p>
-        </p>
-        <button id="confirm">Confirm seat</button>
-        <button id="cancel">Cancel selection</button>
+      <div class="info" id="info">
+        <p>Seat number: <span id="seat-selection">N/A</span></p>
+        <p>Total cost:</p>
+        <p><span id="currency">£</span><span id="price">0.00</span></p>
+
+        <button id="confirm">Confirm</button>
+        <button id="cancel">Cancel</button>
+        <p id="alert-msg"></p>
       </div>
     </div>
 

@@ -9,7 +9,7 @@ h1 {
 }
 
 .info {
-  margin: 10px auto 30px;
+  margin: 10px auto 20px;
   padding: 20px auto;
 }
 p {
@@ -18,12 +18,24 @@ p {
 span {
   font-size: x-large;
 }
-#selected-seat-info {
+#seat-selection {
   display: block;
   margin-top: 10px;
 }
+#price {
+  padding: 0 0.4rem;
+}
+.seat-selection {
+  color: blue;
+  font-weight: 500;
+}
+#alert-msg {
+  color: red;
+}
 button {
   padding: 5px;
+  margin: auto 10px;
+  font-size: medium;
 }
 
 .main-container {
@@ -45,7 +57,7 @@ button {
   justify-items: center;
   column-gap: 2px;
   row-gap: 9px;
-  border: 1px solid lightgrey;
+  /* border: 1px solid lightgrey; */
 }
 
 .seat {
@@ -78,12 +90,13 @@ button:active {
   margin: 10px auto;
 }
 
-.reserved {
+.selected {
   background-color: #35ff00;
-  color: rgb(93, 92, 92);
+  color: rgb(77, 76, 76);
+  font-weight: 400;
 }
 
-.sold {
+.reserved {
   background-color: rgb(93, 92, 92);
   color: white;
 }
@@ -91,7 +104,7 @@ button:active {
 button:active {
   box-shadow: 3px 3px 3px #848282;
 }
-@media screen and (min-width: 500px) and (max-width: 649px) {
+@media screen and (min-width: 480px) and (max-width: 768px) {
   .main-container {
     width: 90%;
   }
@@ -100,7 +113,7 @@ button:active {
     max-width: 70%;
   }
 }
-@media screen and (min-width: 650px) {
+@media screen and (min-width: 769px) {
   body {
     font-size: medium;
   }
@@ -111,13 +124,20 @@ button:active {
     /* background-color: burlywood; */
     /* border: 5px solid coral; */
   }
+
+  .info {
+    margin: 10px auto 30px;
+    padding: 20px auto;
+  }
   .fuselage {
-    grid-template-columns: repeat(3, 0.8fr) 0.2fr repeat(3, 0.8fr);
+    grid-template-columns: repeat(3, 0.8fr) 0.5fr repeat(3, 0.8fr);
     margin: 0 auto;
     min-width: max-content;
     max-width: 40%;
     column-gap: 6px;
     row-gap: 6px;
+    height: 75vh;
+    overflow: scroll;
   }
 
   .seat {
@@ -125,6 +145,7 @@ button:active {
     padding: 10px;
   }
   button {
+    width: 150px;
     padding: 15px 10px;
     margin: 5px;
   }

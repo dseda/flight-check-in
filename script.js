@@ -1,15 +1,17 @@
-let rows = 26;
+let rows = 15;
 let seatLetters = ["A", "B", "C", "D", "E", "F"];
 let columns = 3;
 let seatTotal = rows * 2 * columns;
-const info = document.getElementById("selected-seat-info"); //Seat selection information
+const info = document.getElementById("info");
+const seatSelection = document.getElementById("seat-selection"); //Seat selection information
 const price = document.getElementById("price");
 const fuselage = document.getElementById("fuselage");
 const seatingList = []; // Seats on a seating map
 const reservedSeats = [];
-const reservedItem = document.getElementsByClassName("reserved");
+const selectedItem = document.getElementsByClassName("selected");
 const confirmBtn = document.getElementById("confirm");
 const cancelBtn = document.getElementById("cancel");
+const alertMsg = document.getElementById("alert-msg");
 
 class Seat {
   constructor(letter, rowNum) {
@@ -17,8 +19,8 @@ class Seat {
     this._price = 11.99;
     this._letter = letter;
     this._rowNum = rowNum;
+    this._selected = false;
     this._reserved = false;
-    this._sold = false;
   }
   get seatLetter() {
     return this._letter;
@@ -32,25 +34,25 @@ class Seat {
   get price() {
     return this._price;
   }
+  get isSelected() {
+    return this._selected;
+  }
   get isReserved() {
     return this._reserved;
   }
-  get isSold() {
-    return this._sold;
+  select() {
+    this._selected = true;
+    return this._selected;
+  }
+  deselect() {
+    this._selected = false;
+    return this._selected;
   }
   reserve() {
     this._reserved = true;
-    return this._reserved;
   }
   unreserve() {
     this._reserved = false;
-    return this._reserved;
-  }
-  sell() {
-    this._sold = true;
-  }
-  unsell() {
-    this._sold = false;
   }
   set price(price) {
     this._price = price;
@@ -64,21 +66,20 @@ class Seat {
     this._price = 11.99;
   }
 }
-// Creates seat map and initialises seat objects
+// Create seat map and initialise seat objects
 
-function createSeat() {
-  info.innerHTML = "N/A";
+function createSeatMap() {
+  seatSelection.innerHTML = "n/a";
   for (let r = 0; r < rows; r++) {
     let aisle = document.createElement("div");
     aisle.classList.add("aisle");
-    // console.log(r);
     for (let i = 0; i < seatLetters.length; i++) {
       const seat = new Seat(seatLetters[i], r + 1);
       seatingList.push(seat);
       let passengerSeat = document.createElement("div");
       passengerSeat.innerHTML = seat.seatName;
       passengerSeat.classList.add("seat");
-      if (r === 14 || r === 15) {
+      if (r === 5 || r === 6) {
         seat.upgrade();
         passengerSeat.classList.add("premium");
       }
@@ -91,73 +92,90 @@ function createSeat() {
     }
   }
 }
-createSeat();
+createSeatMap();
 
 const seats = document.getElementsByClassName("seat");
 
 //Seat selection event
 for (let i = 0; i < seats.length; i++) {
   seats[i].addEventListener("mouseup", function (e) {
+    // if there is no seat selected; then select the target
     if (
-      !e.target.classList.contains("reserved") &&
+      !e.target.classList.contains("selected") &&
       reservedSeats.length === 0
     ) {
       let selectedSeat = seatingList.find(
         (s) => s.seatName === e.target.innerHTML
       );
-      selectedSeat.reserve();
-      e.target.classList.add("reserved");
+      selectedSeat.select();
+      e.target.classList.add("selected");
       reservedSeats.push(selectedSeat);
-      info.innerHTML = e.target.innerHTML;
+      seatSelection.innerHTML = e.target.innerHTML;
       price.innerHTML = selectedSeat.price;
-      return reservedSeats;
-    } else if (e.target.classList.contains("reserved")) {
-      e.target.classList.remove("reserved");
-      info.innerHTML = "";
+    }
+    // if the target seat is already selected; then deselect it
+    else if (e.target.classList.contains("selected")) {
+      e.target.classList.remove("selected");
+      seatSelection.innerHTML = "n/a";
       reservedSeats.pop();
-      price.innerHTML = 0;
-      return reservedSeats;
-    } else if (
-      !e.target.classList.contains("reserved") &&
-      reservedSeats.length !== 0
+      price.innerText = 0;
+    }
+    // if there is anothor seat selected; deselect it and then select the target
+    else if (
+      !e.target.classList.contains("selected") &&
+      reservedSeats.length !== 0 &&
+      reservedSeats[0].isReserved === false
     ) {
-      reservedItem[0].classList.remove("reserved");
-      reservedSeats[0].unreserve();
+      selectedItem[0].classList.remove("selected");
+      reservedSeats[0].deselect();
       reservedSeats.pop();
       selectedSeat = seatingList.find((s) => s.seatName === e.target.innerHTML);
-      selectedSeat.reserve();
-      e.target.classList.add("reserved");
+      selectedSeat.select();
+      e.target.classList.add("selected");
       reservedSeats.push(selectedSeat);
-      info.innerHTML = e.target.innerHTML;
+      seatSelection.innerHTML = e.target.innerHTML;
       price.innerHTML = selectedSeat.price;
-      return reservedSeats;
+    }
+    // if there is a reserved seat; then alert the user to cancel the seat selection
+    else {
+      alertMsg.innerHTML = "Cancel seat selection first";
     }
   });
 }
-confirmBtn.addEventListener("click", function (e) {
-  let reserved = document.getElementsByClassName("reserved");
-  reserved[0].classList.add("sold");
-  reserved[0].innerHTML = "X";
-  reserved[0].classList.remove("reserved");
-  reservedSeats[0].sell();
-});
 
+//Confirm seat selection (Reserve selected seat)
+confirmBtn.addEventListener("click", function (e) {
+  let selected = document.getElementsByClassName("selected");
+  selected[0].classList.add("reserved");
+  selected[0].innerHTML = "X";
+  selected[0].classList.remove("selected");
+  reservedSeats[0].reserve();
+  seatSelection.classList.add("seat-selection");
+  confirmBtn.disabled = true;
+});
+//Cancel seat reservation or selection
 cancelBtn.addEventListener("click", function (e) {
-  let sold = document.getElementsByClassName("sold");
+  confirmBtn.disabled = false;
+  seatSelection.classList.remove("seat-selection");
+  alertMsg.innerText = "";
   let reserved = document.getElementsByClassName("reserved");
-  if (reservedSeats[0].isSold) {
-    sold[0].innerHTML = reservedSeats[0].seatName;
-    sold[0].classList.remove("sold", "reserved");
+  let selected = document.getElementsByClassName("selected");
+  // Cancel seat reservation
+  if (reservedSeats[0].isReserved) {
+    reserved[0].innerHTML = reservedSeats[0].seatName;
+    reserved[0].classList.remove("selected", "reserved");
     reservedSeats[0].unreserve();
-    reservedSeats[0].unsell();
+    reservedSeats[0].deselect();
     reservedSeats.pop();
     price.innerHTML = "0.00";
-    info.innerHTML = "N/A";
-  } else {
-    reserved[0].classList.remove("reserved");
-    reservedSeats[0].unreserve();
+    seatSelection.innerHTML = "n/a";
+  }
+  // Cancel seat selection
+  else {
+    selected[0].classList.remove("selected");
+    reservedSeats[0].deselect();
     reservedSeats.pop();
     price.innerHTML = "0.00";
-    info.innerHTML = "N/A";
+    seatSelection.innerHTML = "n/a";
   }
 });
